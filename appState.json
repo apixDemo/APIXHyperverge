@@ -1,0 +1,110 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "08391531-d686-4949-80c8-f5af7f76db79": {
+        "id": "08391531-d686-4949-80c8-f5af7f76db79",
+        "parent": null,
+        "name": "APIXHyperverge",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa"
+        ],
+        "isRemovable": false,
+        "filePath": "APIXHyperverge"
+      },
+      "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa": {
+        "id": "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa",
+        "parent": "08391531-d686-4949-80c8-f5af7f76db79",
+        "name": "lambda.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "APIXHyperverge/lambda.js",
+        "code": "\nlet Swagger = require('swagger-client');\n\nexports.handler = function (event, context, callback) {\n\n    Swagger.http({\n        url: 'https://services.apixplatform.com/api-sandbox/application/token',\n        method: 'post',\n        query: {},\n        headers: { \"Accept\": \"*/*\", \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({\n            \"userName\": \"modelbankuser@inboxbear.com\",\n            \"password\": \"1qaz2wsx@\"\n        })\n    }).then((response) => {\n        var access_token = \"bearer \" + response.body.access_token;\n        // Insert new API calls here to call with APIX Access Token\n        Swagger.http({\n            url: `https://api.apixplatform.com/facematch/1.0/v1/photo/verifyPair`,\n            method: 'post',\n            query: {},\n            headers: { \"appId\": \"2d9288\", \"appKey\": \"506505f70970ce16988f\", \"X-Authorization\": access_token, \"Accept\": \"application/json\", \"Content-Type\": \"application/x-www-form-urlencoded\" },\n            body: `image1=` + event.image1 + `&image2=` + event.image2 + `&type=id`\n        }).then((response) => {\n            callback(null, response);\n        }).catch((err) => {\n            callback(err);\n        });\n    }).catch((err) => {\n        console.log(err);\n        callback(\"Execution failed\");\n    });\n\n}",
+        "triggers": [
+          {
+            "resourceName": "apigusEast1HypervergeIDCheckcheckIDpost",
+            "config": {}
+          }
+        ],
+        "config": {
+          "runtime": "nodejs8.10",
+          "timeout": 60,
+          "memory": 128
+        },
+        "testCases": {
+          "593aa5b3-979c-413b-91a4-e93553d650fa": {
+            "id": "593aa5b3-979c-413b-91a4-e93553d650fa",
+            "name": "Unnamed event",
+            "functionId": "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa",
+            "event": "{\n    \"image1\": \"value1\",\n    \"image2\": \"value2\"\n}"
+          }
+        }
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "08391531-d686-4949-80c8-f5af7f76db79",
+    "openFiles": [
+      "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa"
+    ],
+    "currentFileId": "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa",
+    "resources": {
+      "apigusEast1HypervergeIDCheckcheckIDpost": {
+        "name": "apigusEast1HypervergeIDCheckcheckIDpost",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 0,
+          "apiName": "HypervergeIDCheck",
+          "endpointType": "EDGE",
+          "resourceMode": 0,
+          "resourceName": "checkID",
+          "resourcePath": "/checkID",
+          "restMethod": "POST",
+          "proxyIntegration": false,
+          "enableCORS": true,
+          "stageMode": 0,
+          "stageName": "prod"
+        },
+        "globallyEditable": false
+      }
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "swagger-client": {
+          "name": "swagger-client",
+          "version": "3.8.21"
+        }
+      }
+    },
+    "lambdaId": "9fcfed28-52ba-40b5-961c-d9ee7f2d88aa"
+  },
+  "PROJECT_META": {
+    "projectName": "APIXHyperverge",
+    "projectDescription": "APIXHyperverge",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1548489376855
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "APIXHyperverge",
+      "url": "https://github.com/apixDemo/APIXHyperverge"
+    }
+  }
+}
