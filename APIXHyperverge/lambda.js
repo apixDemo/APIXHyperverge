@@ -3,7 +3,13 @@ let Swagger = require('swagger-client');
 
 exports.handler = function (event, context, callback) {
     console.log(event);
-    callback(null, event);
+    response = {
+        "isBase64Encoded": true,
+        "statusCode": 200,
+        "headers": {},
+        "body": event
+    }
+    callback(null, response);
     // Swagger.http({
     //     url: 'https://services.apixplatform.com/api-sandbox/application/token',
     //     method: 'post',
