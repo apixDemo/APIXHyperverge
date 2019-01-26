@@ -7,7 +7,7 @@ exports.handler = function (event, context, callback) {
         "isBase64Encoded": true,
         "statusCode": 200,
         "headers": {},
-        "body": event
+        "body": JSON.stringify(event)
     }
     callback(null, response);
     // Swagger.http({
